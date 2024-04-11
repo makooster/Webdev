@@ -77,7 +77,7 @@ def vacancyUpdate(request, id):
 
 @api_view(['DELETE'])
 def companyDelete(request, id):
-    company = Vacancy.objects.get(pk = id)
+    company = Company.objects.get(pk = id)
     company.delete()
     return Response('Company successfully deleted!')
 
@@ -87,17 +87,8 @@ def vacancyDelete(request, id):
     vacancy.delete()
     return Response('Vacancy succesfully deleted!')
 
-# @csrf_exempt
-# def company_vacancies(request, id):
-#     company = get_object_or_404(Company, id=id)
-#     vacancies = company.vacancy_set.all()
-#     data = [{'id': vacancy.id, 'name': vacancy.name, 'description': vacancy.description,
-#              'salary': vacancy.salary} for vacancy in vacancies]
-#     return JsonResponse(data, safe=False)
-
-# @csrf_exempt
-# def top_ten_vacancies(request):
-#     top_ten_vacancies = Vacancy.objects.order_by('-salary')[:10]
-#     data = [{'id': vacancy.id, 'name': vacancy.name, 'description': vacancy.description,
-#              'salary': vacancy.salary} for vacancy in top_ten_vacancies]
-#     return JsonResponse(data, safe=False)
+# class VacancyTopTen(APIView):
+#     def get(self,request):
+#         ten_top = Vacancy.objects.all().order_by('-salary')[:10]
+#         serializer = VacancySerializer(ten_top, many=True)
+#         return Response(serializer.data)
