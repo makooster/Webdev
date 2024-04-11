@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view
+# from rest_framework.decorators import csrf_exempt
 from rest_framework.response import Response
 from .serializers import CompanySerializer, VacancySerializer
 from .models import Company, Vacancy
@@ -9,6 +10,12 @@ def companyList(request):
     companies = Company.objects.all()
     serializer = CompanySerializer(companies, many = True)
     return Response(serializer.data)
+
+# @api_view(['GET'])
+# def companiesAndVacancies(request):
+#     companies = Company.objects.all()
+#     serializer = CompanySerializer(companies, many = True)
+#     return Response(serializer.data)
 
 @api_view(['GET'])
 def companyListDetail(request, id):
@@ -22,7 +29,7 @@ def vacancyList(request):
     serializer = VacancySerializer(vacancies, many = True)
     return Response(serializer.data)
 
-# I replaced places of pk and id, if it won't work i should change it.
+# I replaced places of pk and id, if it won't work i should change it. and should also change urls file
 
 @api_view(['GET'])
 def vacancyListDetail(request, id):
@@ -79,3 +86,18 @@ def vacancyDelete(request, id):
     vacancy = Vacancy.objects.get(pk = id)
     vacancy.delete()
     return Response('Vacancy succesfully deleted!')
+
+# @csrf_exempt
+# def company_vacancies(request, id):
+#     company = get_object_or_404(Company, id=id)
+#     vacancies = company.vacancy_set.all()
+#     data = [{'id': vacancy.id, 'name': vacancy.name, 'description': vacancy.description,
+#              'salary': vacancy.salary} for vacancy in vacancies]
+#     return JsonResponse(data, safe=False)
+
+# @csrf_exempt
+# def top_ten_vacancies(request):
+#     top_ten_vacancies = Vacancy.objects.order_by('-salary')[:10]
+#     data = [{'id': vacancy.id, 'name': vacancy.name, 'description': vacancy.description,
+#              'salary': vacancy.salary} for vacancy in top_ten_vacancies]
+#     return JsonResponse(data, safe=False)

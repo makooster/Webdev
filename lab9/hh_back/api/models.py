@@ -16,6 +16,9 @@ class Company(models.Model):
             "city" : self.city,
             "address" : self.address
         }
+    class Meta:
+        verbose_name = "Company"
+        verbose_name_plural = "Companies"
 
 class Vacancy(models.Model):
     name = models.CharField(max_length = 50)
@@ -33,6 +36,9 @@ class Vacancy(models.Model):
             "city" : self.salary,
             "address" : self.company
         }
+    class Meta:
+        verbose_name = "Vacancy"
+        verbose_name_plural = "Vacancies"
 
 
 
